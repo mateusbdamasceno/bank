@@ -19,7 +19,7 @@ public class transactionController {
     }
 
     @RequestMapping(value = "/transaction", method =  RequestMethod.POST)
-    public Transaction transfer(@RequestBody Transaction transaction){
+    public Transaction transfer(@RequestBody Transaction transaction) throws Exception {
         return this.service.makeTransfer(transaction);
     }
 

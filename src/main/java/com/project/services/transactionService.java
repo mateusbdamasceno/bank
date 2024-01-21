@@ -9,10 +9,12 @@ import java.util.List;
 public interface transactionService {
     public List<Transaction> getTransactions();
 
-    Transaction makeTransfer(Transaction transaction);
+    Transaction makeTransfer(Transaction transaction) throws Exception;
 
     public long calculeDifferenceDays(Date date);
 
     public BigDecimal verify(long differenceDays, BigDecimal value);
+
+    public void validate(Transaction transaction) throws Exception;
 
 }

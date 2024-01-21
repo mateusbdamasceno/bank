@@ -23,13 +23,25 @@ public class transactionServiceImp implements transactionService {
     }
 
     @Override
-    public Transaction makeTransfer(Transaction transaction) {
+    public Transaction makeTransfer(Transaction transaction) throws Exception {
 
         System.out.println("transaction.getTransferDate(): "+transaction.getTransferDate());
 
+        validate(transaction);
+
+        transaction.setSchedulingDate(new Date());
         transaction.setRate(verify(calculeDifferenceDays(transaction.getTransferDate()), transaction.getValue()));
 
         return repository.saveTransaction(transaction);
+    }
+
+    public void validate(Transaction transaction) throws Exception {
+        if(transaction.getSourceAccount().length()>10 || transaction.getTargetAccount().length()>10){
+            throw new Exception("CONTA INCORRETA OU INEXISTENTE.");
+        }else{
+            Optional.ofNullable(verify(calculeDifferenceDays(transaction.getTransferDate()), transaction.getValue()))
+                    .orElseThrow(() -> new Exception("DATAS FORA DA MARGEM DE ACEITAÇÃO"));
+        }
     }
 
     public long calculeDifferenceDays(Date date){
@@ -40,21 +52,22 @@ public class transactionServiceImp implements transactionService {
     public BigDecimal verify(long differenceDays, BigDecimal value){
         System.out.println("differenceDays: "+differenceDays);
         if(differenceDays<0 || differenceDays>50){
-            System.out.println("ERRO");
+            return null;
         }else{
             if(differenceDays==0){
                 return new BigDecimal("3.0").add(value.multiply(new BigDecimal("0.025")));
-            }else if(differenceDays>=1 && differenceDays<10){
-                return new BigDecimal("3.0").add(value.multiply(new BigDecimal("0.025")));
+            }else if(differenceDays<=10){
+                return new BigDecimal("12.0");
+            }else if(differenceDays<=20){
+                return value.multiply(new BigDecimal("0.082"));
+            }else if(differenceDays<=30){
+                return value.multiply(new BigDecimal("0.069"));
+            }else if(differenceDays<=40){
+                return value.multiply(new BigDecimal("0.047"));
+            }else if(differenceDays<=50){
+                return value.multiply(new BigDecimal("0.017"));
             }
         }
-
-        //Optional.ofNullable(differenceDays)
-        //        .map()
-
-        return null;
+        return value;
     }
-
-
-
 }
