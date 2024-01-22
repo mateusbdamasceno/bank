@@ -14,4 +14,12 @@
 - Abrir na IDE
 - Utilizar o link do banco de dados pra abir no navegador e entrar com usuário e senha (no caso não tem)
 - Criar a tabela e colunas
-- 
+- No caso da utilização do postman o seguinte body pode ser utilizado
+- {
+  "id": 1,
+  "sourceAccount" : "1212666666",
+  "targetAccount" : "1313555555",
+  "value" : 1000.00,
+  "transferDate" : "2024-01-24",
+  "description" : "Description"
+  }
