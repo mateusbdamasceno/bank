@@ -1,26 +1,21 @@
 package com.project.services;
 
 import com.project.beans.Transaction;
-import com.project.repository.transactionRepository;
+import com.project.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.time.*;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @Service
-public class transactionServiceImp implements transactionService {
+public class transactionServiceImp implements TransactionService {
 
     @Autowired
-    public transactionRepository repository;
-
-    public List<Transaction> getTransactions(){
-       return repository.findAllTransactions();
-    }
+    public TransactionRepository repository;
 
     @Override
     public Transaction makeTransfer(Transaction transaction) throws Exception {
@@ -30,18 +25,28 @@ public class transactionServiceImp implements transactionService {
         validate(transaction);
 
         transaction.setSchedulingDate(new Date());
-        transaction.setRate(verify(calculeDifferenceDays(transaction.getTransferDate()), transaction.getValue()));
+        transaction.setRate(verify(calculeDifferenceDays(transaction.getTransferDate()), transaction.getValueTransfer()));
 
-        return repository.saveTransaction(transaction);
+        return repository.save(transaction);
+        //return (Transaction) repository.saveAll(Arrays.asList(transaction));
+        //return repository.saveTransaction(transaction);
     }
 
     public void validate(Transaction transaction) throws Exception {
         if(transaction.getSourceAccount().length()>10 || transaction.getTargetAccount().length()>10){
             throw new Exception("CONTA INCORRETA OU INEXISTENTE.");
         }else{
-            Optional.ofNullable(verify(calculeDifferenceDays(transaction.getTransferDate()), transaction.getValue()))
+            Optional.ofNullable(verify(calculeDifferenceDays(transaction.getTransferDate()), transaction.getValueTransfer()))
                     .orElseThrow(() -> new Exception("DATAS FORA DA MARGEM DE ACEITAÇÃO"));
         }
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public List<Transaction> getTransactions() {
+        return null;
     }
 
     public long calculeDifferenceDays(Date date){

@@ -1,17 +1,17 @@
 package com.project.controllers;
 
 import com.project.beans.Transaction;
-import com.project.services.transactionService;
+import com.project.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-public class transactionController {
+public class TransactionController {
 
     @Autowired
-    public transactionService service;
+    public TransactionService service;
 
     @GetMapping("/transactions")
     public List<Transaction> getTransactions(){

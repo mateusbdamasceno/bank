@@ -13,9 +13,8 @@ public class Transaction {
     private long id;
     private String sourceAccount;
     private String targetAccount;
-    private BigDecimal value;
+    private BigDecimal valueTransfer;
     private BigDecimal  rate;
     private Date transferDate;
     private Date schedulingDate;
-    private String description;
 }

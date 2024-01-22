@@ -6,8 +6,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-public interface transactionService {
-    public List<Transaction> getTransactions();
+public interface TransactionService {
 
     Transaction makeTransfer(Transaction transaction) throws Exception;
 
@@ -17,4 +16,5 @@ public interface transactionService {
 
     public void validate(Transaction transaction) throws Exception;
 
+    List<Transaction> getTransactions();
 }
