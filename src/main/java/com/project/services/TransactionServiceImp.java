@@ -12,7 +12,7 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @Service
-public class transactionServiceImp implements TransactionService {
+public class TransactionServiceImp implements TransactionService {
 
     @Autowired
     public TransactionRepository repository;
@@ -28,8 +28,6 @@ public class transactionServiceImp implements TransactionService {
         transaction.setRate(verify(calculeDifferenceDays(transaction.getTransferDate()), transaction.getValueTransfer()));
 
         return repository.save(transaction);
-        //return (Transaction) repository.saveAll(Arrays.asList(transaction));
-        //return repository.saveTransaction(transaction);
     }
 
     public void validate(Transaction transaction) throws Exception {

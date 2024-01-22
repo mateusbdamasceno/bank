@@ -1,4 +1,4 @@
-# Sistema 'bank': Um banco onde é possível realizar transações
+# Sistema 'bank': Um banco onde é possível realizar transferência
 - Utilizado a arquitetura MVC por oferecer Segurança e Eficiência. Também permite que o meu código fique mais organizado e melhor pra visualizar.
 - O sistema é dividido em 
 - Controller: Onde chega a requisição do usuário e pega os atributos que são passados como parâmetro
