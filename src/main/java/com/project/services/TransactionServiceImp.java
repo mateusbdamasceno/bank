@@ -44,7 +44,7 @@ public class TransactionServiceImp implements TransactionService {
      */
     @Override
     public List<Transaction> getTransactions() {
-        return null;
+        return repository.findAll();
     }
 
     public long calculeDifferenceDays(Date date){
